@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Swap Radar
 
-## Getting Started
+Decision layer for free/near-free place-trading — home exchange, credit swaps, luxury clubs, and house sitting.
 
-First, run the development server:
+Not a scraped inventory mirror. A comparison + quiz product that routes pre-qualified traffic to platforms via tracked `/go` links.
+
+## Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd swap-radar
+npm install
+npm run dev      # http://localhost:3000
+npm test         # quiz scorer unit tests
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What's implemented
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Area | Location |
+|------|----------|
+| Platform seed (8 networks) | `src/data/platforms.ts` |
+| Quiz rules v1 scorer | `src/lib/quiz/score.ts` |
+| Questions + copy | `src/lib/quiz/questions.ts`, `copy.ts` |
+| Unit tests (examples A–E) | `src/lib/quiz/score.test.ts` |
+| Quiz UI | `/quiz` · `src/components/QuizForm.tsx` |
+| Compare table | `/compare` |
+| Savings calculator | `/tools/savings-calculator` · `src/lib/calculator/` |
+| Affiliate URL resolution | `src/lib/affiliates.ts` · `.env.example` |
+| Clickout persistence | `.data/clickouts.jsonl` · `/admin/clickouts` · `GET /api/clickouts` |
+| SEO guides (10) | `/guides/*`, `/compare/*-vs-*`, `/destinations/*` |
+| Tracked redirects | `/go/[slug]` |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Affiliates & clickouts
 
-## Learn More
+1. Copy `.env.example` → `.env.local`
+2. Paste approved affiliate URLs into `AFFILIATE_*_URL`
+3. Optional: `CLICKOUTS_ADMIN_TOKEN`, `POSTHOG_API_KEY`
+4. Outbound links always use `/go/{slug}?src=…` so clickouts are recorded
 
-To learn more about Next.js, take a look at the following resources:
+## Product docs
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Doc | Purpose |
+|-----|---------|
+| [docs/PRD.md](docs/PRD.md) | MVP PRD |
+| [docs/quiz-decision-tree.md](docs/quiz-decision-tree.md) | Scoring rules source of truth |
+| [docs/content-outline.md](docs/content-outline.md) | First 10 SEO pages |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Product in one line
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> Verified multi-platform decision engine (directory + quiz + calculator + destination SEO + affiliate clickouts), then a human intent board and light city-coverage signals.
